@@ -1,0 +1,31 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CDM</title>
+</head>
+<body>
+    <h1>Central Download Manager</h1>
+    <input placeholder="URL" id="URL">
+    <button id="send">Send</button>
+    <script>
+        var Url = document.getElementById("URL");
+        var button = document.getElementById("send");
+        button.addEventListener("click", (event) => 
+        {            
+            fetch("/page", {
+                method: "POST", 
+                headers: 
+                {
+                    "Content-type" : "application/json",
+                },
+                body: JSON.stringify(
+                    {
+                        "URL" : Url.value,
+                        "extentions" : [".zip", ".rar"]
+                    })
+            });
+        })
+    </script>
+</body>
+</html>
