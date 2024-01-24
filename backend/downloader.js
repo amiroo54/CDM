@@ -47,6 +47,10 @@ async function download(url, location, startCallback, endCallback, updateCallbac
 let downloadingList = []
 function downloadList(list, path, numOfDownloads, updateCallBack)
 {
+    if (list.length == 0)
+    {
+        return;
+    }
     console.log("Starting Download");
     download(list[0], path + getNameFromUrl(list[0]), startCallBack, endCallback, updateCallBack);
 
