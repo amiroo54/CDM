@@ -7,10 +7,12 @@
 <body>
     <h1>Central Download Manager</h1>
     <input placeholder="URL" id="URL">
+    <input placeholder=".exa, .mp, .le" id="extentions">
     <button id="send">Send</button>
     <script>
         var Url = document.getElementById("URL");
         var button = document.getElementById("send");
+        var extentions = document.getElementById("extentions").value.split(",");
         button.addEventListener("click", (event) => 
         {            
             fetch("/page", {
@@ -22,7 +24,7 @@
                 body: JSON.stringify(
                     {
                         "URL" : Url.value,
-                        "extentions" : [".zip", ".rar"]
+                        "extentions" : extentions
                     })
             });
         })
