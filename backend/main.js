@@ -6,7 +6,7 @@ const { json } = require("express");
 const downloader = require('./downloader') 
 app.use(require("body-parser").json())
 
-app.get("/mass", (req, res) => 
+app.post("/mass", (req, res) => 
 {   
     let pageURL = req.body['URL'];
     console.log("Recived mass download with url: ", pageURL);
@@ -52,6 +52,7 @@ app.get("/mass", (req, res) =>
 app.post("/list", (req, res) => 
 {
     let linksToDownload = req.body['links'];
+    console.log("Links recived to download: ", linksToDownload);
     downloader.downloadList(linksToDownload, "/home/amiroof/Downloads", 1, (progress) => 
     {
         console.log("Progress: ", progress);
