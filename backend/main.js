@@ -25,6 +25,7 @@ app.post("/page", (req, res) =>
         let document = page.window.document;
         let links = document.querySelectorAll("a");
         let linksToDownload = []
+        console.log("Recived extentions: ", extentions);
         for (let i = 0; i < links.length; i++)
         {
             for (let e = 0; e < extentions.length; e++)
@@ -37,16 +38,15 @@ app.post("/page", (req, res) =>
                         l = l.startsWith("/")? pageURL + l : pageURL + "/" + l
                     }
                     //let head = await fetch(l, {method: "HEAD"});
-                    console.log(l);
-                    linksToDownload.push(l);
+                    linksToDownload.push(l.trim());
                 } 
             }
         }
+        console.log("Final List: ", linksToDownload);
         downloader.downloadList(linksToDownload, "/home/amiroof/Downloads", 1, (progress) => 
         {
-            console.log(progress)
+            console.log("Progress: ", progress);
         });
-        console.log('done');
         res.status = 200;
         res.send();
     })
