@@ -16,8 +16,8 @@
         button.addEventListener("click", (event) => 
         {            
             var extentions = document.getElementById("extentions").value.split(",");
-            fetch("/page", {
-                method: "POST", 
+            fetch("/mass", {
+                method: "GET", 
                 headers: 
                 {
                     "Content-type" : "application/json",

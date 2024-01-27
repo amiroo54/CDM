@@ -6,7 +6,7 @@ const { json } = require("express");
 const downloader = require('./downloader') 
 app.use(require("body-parser").json())
 
-app.post("/page", (req, res) => 
+app.get("/mass", (req, res) => 
 {   
     let pageURL = req.body['URL'];
     console.log("Recived mass download with url: ", pageURL);
@@ -20,7 +20,7 @@ app.post("/page", (req, res) =>
         }
         let data = await pageres.text();
         let renderedPage = await cheerio.load(data).html();
-        fs.writeFileSync("./log.log", renderedPage, "utf-8");
+        //fs.writeFileSync("./log.log", renderedPage, "utf-8");
         let page = new JSDOM(renderedPage);
         let document = page.window.document;
         let links = document.querySelectorAll("a");
@@ -43,13 +43,21 @@ app.post("/page", (req, res) =>
             }
         }
         console.log("Final List: ", linksToDownload);
-        downloader.downloadList(linksToDownload, "/home/amiroof/Downloads", 1, (progress) => 
-        {
-            console.log("Progress: ", progress);
-        });
+        
         res.status = 200;
-        res.send();
+        res.send(linksToDownload);
     })
+})
+
+app.post("/list", (req, res) => 
+{
+    let linksToDownload = req.body['links'];
+    downloader.downloadList(linksToDownload, "/home/amiroof/Downloads", 1, (progress) => 
+    {
+        console.log("Progress: ", progress);
+    });
+    res.status = 200;
+    res.send();
 })
 
 app.get("/", (req, res) => 
