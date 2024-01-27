@@ -1,46 +1,67 @@
-
-const wget = require("wget");
-
-function getSpeedFromStartTime(start)
+const https = require("https");
+const fs = require("fs");
+const path = require("path");
+function getSpeedFromStartTime(start, size)
 {
     let endTime = new Date();
-    const timeDiff = endTime - startTime;
-    return speed = fileSize / (timeDiff / 1000);
+    const timeDiff = endTime - start;
+    return speed = size / (timeDiff / 1000);
 }
 
 function getNameFromUrl(url)
 {
-    return "/" + url.split("/").last;
+    let splits = url.split("/");
+    return "/" + splits[splits.length - 1];
 }
 
 async function download(url, location, startCallback, endCallback, updateCallback)
 {
-    let startTime;
     console.log("Downloading: ", url);
-    const download = wget.download(url, location, {});
-    download.on('start', (filesize) => 
+    let urlObj = new URL(url);
+    let options = {
+        mathod: "GET",
+        
+    }
+    return https.get(urlObj, options, (res) =>
     {
-        startTime = new Date();
-        startCallback(filesize);
-    });
-    download.on('end', (error) => 
-    {
-        if (error) 
+        console.log("Status: ", res.statusCode);
+        if (res.statusCode == 301 || res.statusCode == 302)
         {
-            console.log("erorr: ", error);
-        } else
+            return download(res.headers.location, location, startCallback, endCallback, updateCallback);
+        }
+        const size = res.headers['content-length'];
+        console.log("Recive file size: ", size);
+        let downloadedSize = 0;
+        const startTime = new Date();
+        let fileLocation = location + "/" + getNameFromUrl(urlObj.pathname);
+        let fileStream = fs.createWriteStream(fileLocation, {'flags': 'a', 'encoding': null});
+        if (startCallback)
+        {
+            startCallback(size);
+        }
+        res.on('data', (chunk) => 
+        {
+            downloadedSize += chunk.length
+            fileStream.write(chunk);
+            if (updateCallback)
+            {
+                updateCallback(downloadedSize / size);
+            }
+        });
+        res.on("error", (err) => 
+        {
+            console.error(err);
+        })
+        res.on("end", () => 
         {
             console.log("Download finished: ", url);
-            console.log("Average Speed: ", getSpeedFromStartTime(startTime));
-            endCallback(url);
-        }
-
-    });
-    download.on('progress', (progress) => 
-    {
-        updateCallback(progress);
-    })
-    
+            console.log("Average Speed: ", getSpeedFromStartTime(startTime, size));
+            if (endCallback)
+            {
+                endCallback(url);
+            }
+        })
+    }).end();
 }
 
 
@@ -52,27 +73,7 @@ function downloadList(list, path, numOfDownloads, updateCallBack)
         return;
     }
     console.log("Starting Download");
-    download(list[0], path + getNameFromUrl(list[0]), startCallBack, endCallback, updateCallBack);
-
-
-    function startCallBack(fileSize)
-    {
-        if (downloadingList.length < numOfDownloads)
-        {
-            downloadingList.push(list[0]);
-            list = list.shift();
-            download(list[0], path + list[0], startCallBack, endCallback, updateCallBack);
-        }
-    }
-
-    function endCallback(url)
-    {
-        downloadingList = downloadingList.filter((value) => {value == url});
-        if (downloadingList.length < list.length)
-        {
-            download(list[0], path + getNameFromUrl(list[0]), startCallBack, endCallback, updateCallBack);
-        }
-    }
+    download(list[0], path, () => {}, () => {}, updateCallBack);
 }
 
 
