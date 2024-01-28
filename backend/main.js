@@ -86,5 +86,18 @@ app.listen(3000, () =>
 {
     console.log("Server started on:")
     console.log("Local: http://localhost:3000")
-    console.log("Network: http://192.168.1.8:3000")
+
+    const { networkInterfaces } = require('os');
+    const nets = networkInterfaces();
+    for (const name of Object.keys(nets)) 
+    {
+        for (const net of nets[name])
+        {
+            const familyV4 = typeof net.family === 'string' ? 'IPv4' : 4
+            if (net.family === familyV4 && !net.internal)
+            {
+                console.log("Network: http://" + net.address + ":3000");
+            } 
+        }
+    }
 })
