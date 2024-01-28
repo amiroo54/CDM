@@ -61,6 +61,18 @@ app.post("/list", (req, res) =>
     res.send();
 })
 
+app.post("/single", (req, res) => 
+{
+    let link = req.body['link'];
+    console.log("a Link recived to download: ", link);
+    downloader.download(link, "/home/amiroof/Downloads", () => {}, () => {}, (progress) => 
+    {
+        console.log("Progress: ", progress);
+    })
+    res.status = 200;
+    res.send();
+})
+
 app.get("/", (req, res) => 
 {
     res.setHeader("Content-type", "text/html")
