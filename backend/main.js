@@ -4,10 +4,33 @@ const fs = require('fs');
 const cheerio = require('cheerio');
 const { json } = require("express");
 const downloader = require('./downloader') 
+const query = require("./query");
 app.use(require("body-parser").json())
 
+app.get("/", (req, res) => 
+{
+    res.setHeader("Content-type", "text/html")
+    let data = fs.readFileSync("./frontend/index.html")
+    res.status = 200
+    res.send(data);
+})    
+
+app.post("/single", (req, res) => 
+{
+    let link = req.body['link'];
+    console.log("a Link recived to download: ", link);
+    downloader.download(link, "/home/amiroof/Downloads", () => {}, () => {}, (progress) => 
+    {
+        console.log("Progress: ", progress);
+    })
+    res.status = 200;
+    res.send();
+})
+
+
+
 app.post("/mass", (req, res) => 
-{   
+{
     let pageURL = req.body['URL'];
     console.log("Recived mass download with url: ", pageURL);
     let extentions = req.body['extentions'];
@@ -17,7 +40,7 @@ app.post("/mass", (req, res) =>
         {
             res.status = pageres.status;
             res.send();
-        }
+        }    
         let data = await pageres.text();
         let renderedPage = await cheerio.load(data).html();
         //fs.writeFileSync("./log.log", renderedPage, "utf-8");
@@ -36,50 +59,36 @@ app.post("/mass", (req, res) =>
                     if (!l.startsWith("http")) 
                     {
                         l = l.startsWith("/")? pageURL + l : pageURL + "/" + l
-                    }
+                    }    
                     //let head = await fetch(l, {method: "HEAD"});
                     linksToDownload.push(l.trim());
-                } 
-            }
-        }
+                }     
+            }    
+        }    
         console.log("Final List: ", linksToDownload);
         
         res.status = 200;
         res.send(linksToDownload);
-    })
-})
+    })    
+})    
 
 app.post("/list", (req, res) => 
 {
-    let linksToDownload = req.body['links'];
-    console.log("Links recived to download: ", linksToDownload);
-    downloader.downloadList(linksToDownload, "/home/amiroof/Downloads", 1, (progress) => 
+    console.log("Links recived to download: ", req.body['links']);
+    let linksToDownload = []
+    for (let i = 0; i < req.body['links'].length; i++)
+    {
+        linksToDownload.push(new query.downloadObject(req.body['links'][i], "/home/amiroof/Downloads/"));
+    }
+
+    downloader.downloadList(linksToDownload, 1, (progress) => 
     {
         console.log("Progress: ", progress);
-    });
+    });    
     res.status = 200;
     res.send();
-})
+})    
 
-app.post("/single", (req, res) => 
-{
-    let link = req.body['link'];
-    console.log("a Link recived to download: ", link);
-    downloader.download(link, "/home/amiroof/Downloads", () => {}, () => {}, (progress) => 
-    {
-        console.log("Progress: ", progress);
-    })
-    res.status = 200;
-    res.send();
-})
-
-app.get("/", (req, res) => 
-{
-    res.setHeader("Content-type", "text/html")
-    let data = fs.readFileSync("./frontend/index.html")
-    res.status = 200
-    res.send(data);
-})
 
 
 app.listen(3000, () => 

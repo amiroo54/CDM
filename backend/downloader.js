@@ -8,33 +8,33 @@ function getSpeedFromStartTime(start, size)
     return speed = size / (timeDiff / 1000);
 }
 
-function getNameFromUrl(url)
+async function download(downloadObject, startCallback, endCallback, updateCallback)
 {
-    let splits = url.split("/");
-    return "/" + splits[splits.length - 1];
-}
-
-async function download(url, location, startCallback, endCallback, updateCallback)
-{
-    console.log("Downloading: ", url);
-    let urlObj = new URL(url);
+    console.log("Downloading: ", downloadObject.url);
+    let urlObj = new URL(downloadObject.url);
     let options = {
         mathod: "GET",
-        
+        headers: {}
     }
+    if (fs.existsSync(downloadObject.path))
+    {
+        let range = fs.statSync(downloadObject.path).size;
+        Object.assign(options.headers, {Range: `bytes=${range}-`});
+    }
+    console.log(options);
     return https.get(urlObj, options, (res) =>
     {
         console.log("Status: ", res.statusCode);
         if (res.statusCode == 301 || res.statusCode == 302)
         {
-            return download(res.headers.location, location, startCallback, endCallback, updateCallback);
+            downloadObject.url = new URL(res.headers.location);
+            return download(downloadObject, startCallback, endCallback, updateCallback);
         }
         const size = res.headers['content-length'];
         console.log("Recive file size: ", size);
         let downloadedSize = 0;
         const startTime = new Date();
-        let fileLocation = location + "/" + getNameFromUrl(urlObj.pathname);
-        let fileStream = fs.createWriteStream(fileLocation, {'flags': 'a', 'encoding': null});
+        let fileStream = fs.createWriteStream(downloadObject.path, {'flags': 'a', 'encoding': null});
         if (startCallback)
         {
             startCallback(size);
@@ -54,11 +54,11 @@ async function download(url, location, startCallback, endCallback, updateCallbac
         })
         res.on("end", () => 
         {
-            console.log("Download finished: ", url);
+            console.log("Download finished: ", downloadObject.url);
             console.log("Average Speed: ", getSpeedFromStartTime(startTime, size));
             if (endCallback)
             {
-                endCallback(url);
+                endCallback(downloadObject);
             }
         })
     }).end();
@@ -66,18 +66,19 @@ async function download(url, location, startCallback, endCallback, updateCallbac
 
 
 let downloadingList = []
-function downloadList(list, path, numOfDownloads, updateCallBack)
+function downloadList(list, numOfDownloads, updateCallBack)
 {
     if (list.length == 0)
     {
         return;
     }
     console.log("Starting Download");
-    download(list[0], path, () => {}, () => {}, updateCallBack);
+    download(list[0], () => {}, () => {}, updateCallBack); //add download more.
 }
 
 
 module.exports = 
 {
-    downloadList
+    downloadList, 
+    download
 }
