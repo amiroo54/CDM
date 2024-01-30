@@ -5,11 +5,13 @@ const cheerio = require('cheerio');
 const { json } = require("express");
 const downloader = require('./downloader') 
 const query = require("./query");
+const path = require("path");
 
 app.use(require("body-parser").json())
 app.use(require("express").static("frontend"));
 
 let queries = [];
+const downloadFolder = path.join(require("os").homedir, "Downloads");
 
 app.get("/", (req, res) => 
 {
@@ -23,7 +25,7 @@ app.post("/single", (req, res) =>
 {
     let link = req.body['link'];
     console.log("a Link recived to download: ", link);
-    downloader.download(link, "/home/amiroof/Downloads", () => {}, () => {}, (progress) => 
+    downloader.download(link, downloadFolder, () => {}, () => {}, (progress) => 
     {
         console.log("Progress: ", progress);
     })
@@ -84,7 +86,7 @@ app.post("/list", (req, res) =>
     let q = new query.query(qname, Date.now());
     for (let i = 0; i < req.body['links'].length; i++)
     {
-        q.addLink(new query.downloadObject(req.body['links'][i], "/home/amiroof/Downloads/"));
+        q.addLink(new query.downloadObject(req.body['links'][i], downloadFolder));
         linksToDownload.push();
     }
     queries.push(q);
