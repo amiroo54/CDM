@@ -5,7 +5,11 @@ const cheerio = require('cheerio');
 const { json } = require("express");
 const downloader = require('./downloader') 
 const query = require("./query");
+
 app.use(require("body-parser").json())
+app.use(require("express").static("frontend"));
+
+let queries = [];
 
 app.get("/", (req, res) => 
 {
@@ -76,11 +80,14 @@ app.post("/list", (req, res) =>
 {
     console.log("Links recived to download: ", req.body['links']);
     let linksToDownload = []
+    let qname = req.query.name? req.query.name : req.body['links'][0];
+    let q = new query.query(qname, Date.now());
     for (let i = 0; i < req.body['links'].length; i++)
     {
-        linksToDownload.push(new query.downloadObject(req.body['links'][i], "/home/amiroof/Downloads/"));
+        q.addLink(new query.downloadObject(req.body['links'][i], "/home/amiroof/Downloads/"));
+        linksToDownload.push();
     }
-
+    queries.push(q);
     downloader.downloadList(linksToDownload, 1, (progress) => 
     {
         console.log("Progress: ", progress);
@@ -95,7 +102,6 @@ app.listen(3000, () =>
 {
     console.log("Server started on:")
     console.log("Local: http://localhost:3000")
-
     const { networkInterfaces } = require('os');
     const nets = networkInterfaces();
     for (const name of Object.keys(nets)) 
