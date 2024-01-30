@@ -36,6 +36,7 @@
                     })
             }).then(async (res) => 
             {
+                links = [];
                 let linksFound = await res.json();
                 document.getElementById("found").innerHTML = "<ul></ul>";
                 for (let i = 0; i < linksFound.length; i++)

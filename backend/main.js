@@ -11,7 +11,7 @@ app.use(require("body-parser").json())
 app.use(require("express").static("frontend"));
 
 let queries = [];
-const downloadFolder = path.join(require("os").homedir, "Downloads");
+const downloadFolder = path.join(require("os").homedir(), "Downloads");
 
 app.get("/", (req, res) => 
 {
@@ -87,10 +87,10 @@ app.post("/list", (req, res) =>
     for (let i = 0; i < req.body['links'].length; i++)
     {
         q.addLink(new query.downloadObject(req.body['links'][i], downloadFolder));
-        linksToDownload.push();
+        linksToDownload.push(req.body['links'][i]);
     }
     queries.push(q);
-    downloader.downloadList(linksToDownload, 1, (progress) => 
+    downloader.downloadList(q, 1, (progress) => 
     {
         console.log("Progress: ", progress);
     });    
