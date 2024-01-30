@@ -10,21 +10,34 @@ body{
 }
 
 
-input, button{
+input{
     text-align: center;
     margin: 5px;
     padding: 5px;
+    width: 40%;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
 
 input:focus{
-    border: 2px solid blue;
- }
+    border: 2px solid rgb(124, 185, 255);
+}
+
+button{
+    text-align: center;
+    margin: 5px;
+    padding: 5px;
+    background-color: rgb(149, 228, 238);
+    color: rgb(4, 12, 136);
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+
 
 .box{
     margin: 5px;
     padding: 5px;
     text-align: center;
-    border: 1px solid #ccc;
+    border: 5px solid #002ca7;
 }
 
 
