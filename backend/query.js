@@ -2,8 +2,9 @@ const downloader = require("./downloader");
 const fs = require("fs");
 class query
 {
-    constructor(startTime) 
+    constructor(name, startTime) 
     {
+        this.name = name;
         this.startTime = startTime;
         this.links = [];
     }

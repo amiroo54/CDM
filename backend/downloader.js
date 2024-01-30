@@ -68,12 +68,12 @@ async function download(downloadObject, startCallback, endCallback, updateCallba
 let downloadingList = []
 function downloadList(list, numOfDownloads, updateCallBack)
 {
-    if (list.length == 0)
+    if (list.links.length == 0)
     {
         return;
     }
     console.log("Starting Download");
-    download(list[0], () => {}, () => {}, updateCallBack); //add download more.
+    download(list.links[0], () => {}, () => {}, updateCallBack); //add download more.
 }
 
 
