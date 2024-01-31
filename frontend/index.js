@@ -83,9 +83,14 @@ button.addEventListener("click", (event) =>
     });
 })
 
-let queries = document.getElementById("queries");
+let queriesObj = document.getElementById("queries");
 fetch("/queries").then(async (res) => 
 {
     let queries = await res.json();
-    console.log(queries);
+    for (let i = 0; i < queries.length; i++)
+    {
+        let e = document.createElement("p");
+        e.innerHTML = queries[i];
+        queriesObj.appendChild(e);
+    }
 })

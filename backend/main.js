@@ -12,6 +12,7 @@ app.use(require("express").static("frontend"));
 
 let queries = [];
 let variousFiles = new query.query("Various Files", null);
+queries.push(variousFiles);
 const downloadFolder = path.join(require("os").homedir(), "Downloads");
 
 app.get("/", (req, res) => 
@@ -83,9 +84,9 @@ app.post("/mass", (req, res) =>
 app.post("/list", (req, res) => 
 {
     console.log("Links recived to download: ", req.body['links']);
-    let linksToDownload = []
-    let qname = req.query.name? req.query.name : req.body['links'][0];
+    let qname = req.query.name? req.query.name : decodeURIComponent(req.body['links'][0].split("/").pop());
     let q = new query.query(qname, Date.now());
+    let linksToDownload = []
     for (let i = 0; i < req.body['links'].length; i++)
     {
         q.addLink(new query.downloadObject(req.body['links'][i], downloadFolder));
@@ -94,13 +95,25 @@ app.post("/list", (req, res) =>
     queries.push(q);
     downloader.downloadList(q, 1, (progress) => 
     {
-        console.log("Progress: ", progress);
+        //console.log("Progress: ", progress);
     });    
     res.status = 200;
     res.send();
 })    
 
+app.post("/pause", (req, res) => 
+{
+    let q = req.query.query;
+    console.log("Pausing: ", q);
 
+})
+
+app.get("/queries", (req, res) => //THIS IS TEMPORARY, SHOULD BE REPLACED. maybe not.
+{  
+    let names = queries.map(query => query.name);
+    res.status = 200;
+    res.send(names);
+})
 
 app.listen(3000, () => 
 {
