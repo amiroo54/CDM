@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,80 +8,110 @@
 </head>
 <body>
     <h1 id="h001">Central Download Manager</h1>
-    <div class="box">
-        <input placeholder="URL" id="URL">
-        <input placeholder=".exa, .mp, .le" id="extentions">
-        <button id="send">Send</button>
-    </div>
-    <div id="found">
-        <ul></ul>
-    </div>
-    <script>
-        var Url = document.getElementById("URL");
-        var button = document.getElementById("send");
-        console.log(extentions)
-        let links = [];
-        button.addEventListener("click", (event) => 
-        {            
-            var extentions = document.getElementById("extentions").value.split(",");
-            fetch("/mass", {
-                method: "POST", 
-                headers: 
-                {
-                    "Content-type" : "application/json",
-                },
-                body: JSON.stringify(
-                    {
-                        "URL" : Url.value,
-                        "extentions" : extentions
-                    })
-            }).then(async (res) => 
+    <div>
+        <div class="box">
+            <p>Single Download</p>
+            <input placeholder="URL" id="single">
+            <button id="download">Download</button>
+        </div>
+        <script>
+            var url = document.getElementById("single");
+            var button = document.getElementById("download");
+            button.addEventListener("click", (ev) => 
             {
-                links = [];
-                let linksFound = await res.json();
-                document.getElementById("found").innerHTML = "<ul></ul>";
-                for (let i = 0; i < linksFound.length; i++)
+                let options = 
                 {
-                    let obj = document.createElement("li");
-                    let input = document.createElement("input");
-                    input.setAttribute("type", "checkbox");
-                    input.toggleAttribute("checked")
-                    let lable = document.createElement("a");
-                    lable.innerHTML = linksFound[i];
-                    obj.appendChild(input);
-                    obj.appendChild(lable);
-                    document.getElementById("found").children[0].appendChild(obj);
-                    links.push(obj);
-                }
-                let btn = document.createElement("button");
-                btn.innerHTML = "Download";
-                btn.addEventListener("click", () => 
-                {
-                    let linksToSend = [];
-                    for (let i = 0; i < links.length; i++)
+                    method: "POST",
+                    headers: 
                     {
-                        if (links[i].children[0].checked)
-                        {
-                            linksToSend.push(links[i].children[1].innerHTML);
-                        }
-                    }
-                    let req = {
-                        method: "POST",
-                        headers: 
-                        {
-                            "Content-type" : "application/json",
-                        },
-                        body: JSON.stringify(
-                        {
-                            "links" : linksToSend,
-                        })
-                    } 
-                    console.log(req);
-                    fetch("/list", req );
+                        "Content-type": "application/json",
+                    },
+                    body : JSON.stringify({"link" : url.value})
+                }
+                fetch("/single", options).then(async (res) => 
+                {
+                    console.log("done");
                 })
-                document.querySelector("#found").appendChild(btn);
-            });
-        })
-    </script>
+            })
+        </script>
+    </div>
+    <div>
+        <div class="box">
+            <p>Mass Download</p>
+            <input placeholder="URL" id="URL">
+            <input placeholder=".exa, .mp, .le" id="extentions">
+            <button id="send">Send</button>
+        </div>
+        <div id="found">
+            <ul></ul>
+        </div>
+        <script>
+            var Url = document.getElementById("URL");
+            var button = document.getElementById("send");
+            console.log(extentions)
+            let links = [];
+            button.addEventListener("click", (event) => 
+            {            
+                var extentions = document.getElementById("extentions").value.split(",");
+                fetch("/mass", {
+                    method: "POST", 
+                    headers: 
+                    {
+                        "Content-type" : "application/json",
+                    },
+                    body: JSON.stringify(
+                        {
+                            "URL" : Url.value,
+                            "extentions" : extentions
+                        })
+                }).then(async (res) => 
+                {
+                    links = [];
+                    let linksFound = await res.json();
+                    document.getElementById("found").innerHTML = "<ul></ul>";
+                    for (let i = 0; i < linksFound.length; i++)
+                    {
+                        let obj = document.createElement("li");
+                        let input = document.createElement("input");
+                        input.setAttribute("type", "checkbox");
+                        input.toggleAttribute("checked")
+                        let lable = document.createElement("a");
+                        lable.innerHTML = linksFound[i];
+                        obj.appendChild(input);
+                        obj.appendChild(lable);
+                        document.getElementById("found").children[0].appendChild(obj);
+                        links.push(obj);
+                    }
+                    let btn = document.createElement("button");
+                    btn.innerHTML = "Download";
+                    btn.addEventListener("click", () => 
+                    {
+                        let linksToSend = [];
+                        for (let i = 0; i < links.length; i++)
+                        {
+                            if (links[i].children[0].checked)
+                            {
+                                linksToSend.push(links[i].children[1].innerHTML);
+                            }
+                        }
+                        let req = {
+                            method: "POST",
+                            headers: 
+                            {
+                                "Content-type" : "application/json",
+                            },
+                            body: JSON.stringify(
+                            {
+                                "links" : linksToSend,
+                            })
+                        } 
+                        console.log(req);
+                        fetch("/list", req );
+                    })
+                    document.querySelector("#found").appendChild(btn);
+                });
+            })
+        </script>
+    </div>
 </body>
 </html>
