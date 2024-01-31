@@ -12,8 +12,13 @@ async function download(downloadObject, startCallback, endCallback, updateCallba
 {
     console.log("Downloading: ", downloadObject.url);
     let urlObj = new URL(downloadObject.url);
+    if (downloadObject.ended)
+    {
+        console.log("File already downloaded.");
+        endCallback(downloadObject);
+    }
     let options = {
-        mathod: "GET",
+        method: "GET",
         headers: {}
     }
     if (fs.existsSync(downloadObject.path))
@@ -31,21 +36,24 @@ async function download(downloadObject, startCallback, endCallback, updateCallba
             return download(downloadObject, startCallback, endCallback, updateCallback);
         }
         const size = res.headers['content-length'];
+        if (!downloadObject.size)
+        {
+            downloadObject.size = size; // setting the inital size, for displaying correct progress.
+        }
         console.log("Recive file size: ", size);
-        let downloadedSize = 0;
         const startTime = new Date();
         let fileStream = fs.createWriteStream(downloadObject.path, {'flags': 'a', 'encoding': null});
         if (startCallback)
         {
-            startCallback(size);
+            startCallback(downloadObject);
         }
         res.on('data', (chunk) => 
         {
-            downloadedSize += chunk.length
+            downloadObject.downloadedSize += chunk.length
             fileStream.write(chunk);
             if (updateCallback)
             {
-                updateCallback(downloadedSize / size);
+                updateCallback(downloadObject.downloadedSize / downloadObject.size);
             }
         });
         res.on("error", (err) => 
@@ -65,15 +73,23 @@ async function download(downloadObject, startCallback, endCallback, updateCallba
 }
 
 
-let downloadingList = []
-function downloadList(list, numOfDownloads, updateCallBack)
+function downloadList(query, numOfDownloads, updateCallBack)
 {
-    if (list.links.length == 0)
+    if (query.links.length == 0)
     {
         return;
     }
     console.log("Starting Download");
-    download(list.links[0], () => {}, () => {}, updateCallBack); //add download more.
+    query.active.push(download(query.getNextLink(), () => {}, endCallback,updateCallBack)); 
+    function endCallback(object)
+    {
+        object.ended = true;
+        let next = object.query.getNextLink();
+        if (next)
+        {
+            object.query.active.push(download(next, () => {}, endCallback, updateCallBack));
+        } else {return;}
+    }
 }
 
 

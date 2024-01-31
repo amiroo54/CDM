@@ -11,6 +11,7 @@ app.use(require("body-parser").json())
 app.use(require("express").static("frontend"));
 
 let queries = [];
+let variousFiles = new query.query("Various Files", null);
 const downloadFolder = path.join(require("os").homedir(), "Downloads");
 
 app.get("/", (req, res) => 
@@ -25,7 +26,8 @@ app.post("/single", (req, res) =>
 {
     let link = req.body['link'];
     console.log("a Link recived to download: ", link);
-    downloader.download(link, downloadFolder, () => {}, () => {}, (progress) => 
+    variousFiles.addLink(new query.downloadObject(link, downloadFolder));
+    downloader.download(variousFiles, downloadFolder, () => {}, () => {}, (progress) => 
     {
         console.log("Progress: ", progress);
     })
