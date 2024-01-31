@@ -7,10 +7,18 @@ class query
         this.name = name;
         this.startTime = startTime;
         this.links = [];
+        this.active = [];
+        this.finished = [];
     }
     
     addLink(link) {
         this.links.push(link);
+        link.query = this;
+    }
+
+    getNextLink() 
+    {
+        return this.links[this.finished.length + this.active.length];
     }
 }
 
@@ -24,6 +32,9 @@ class downloadObject
         }
         this.url = url;
         this.path = directory + "/" + this.getFileName();
+        this.size = 0;
+        this.downloadedSize = 0;
+        this.ended = false;
     }
     getFileName()
     {
