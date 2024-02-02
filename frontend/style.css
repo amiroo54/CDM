@@ -1,12 +1,12 @@
 body{
     font-family: Arial, Helvetica, sans-serif;
-    background-color: aliceblue;
+    background-image: url("./images/2.svg");
 }
 
 #h001{
-
     text-align: center;
-    color: darkblue;
+    color: #2932b4;
+    background-color:rgba(205, 249, 255, 0.2);
 }
 
 .singGrp input{
@@ -41,7 +41,7 @@ input:focus{
 
 button{
     text-align: center;
-    border: 2px solid #002ca7;
+    border: 1px solid #002ca7;
     margin: 5px;
     padding: 5px;
     background-color: rgb(140, 230, 250);
@@ -63,9 +63,12 @@ button:focus{
     margin: 5px;
     padding: 5px;
     text-align: center;
-    border: 5px solid #002ca7;
+    border: 2px solid #002ca7;
+    background-color: rgba(205, 249, 255, 0.2);
 }
 
-
-
+.Ever{
+    border: 1px solid #002ca7;
+    background-color: rgba(205, 249, 255, 0.2);
+}
 
