@@ -44,7 +44,7 @@ export default
             if (extentions == "")
             {
                 //add some popup.
-                extentions = ".rar";
+                extentions = [".rar", ".zip", ".7z"];
             }
             if (url == "")
             {
