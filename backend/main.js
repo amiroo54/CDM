@@ -28,7 +28,7 @@ app.post("/single", (req, res) =>
     let link = req.body['link'];
     console.log("a Link recived to download: ", link);
     variousFiles.addLink(new query.downloadObject(link, downloadFolder));
-    downloader.download(variousFiles, downloadFolder, () => {}, () => {}, (progress) => 
+    downloader.downloadList(variousFiles, downloadFolder, () => {}, () => {}, (progress) => 
     {
         console.log("Progress: ", progress);
     })

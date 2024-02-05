@@ -1,9 +1,12 @@
 <template>
   <pre><p></p></pre>
+  <div class="box">
+      <SingleDownload />
+  </div>
   <pre><p></p></pre>
-  <SingleDownload />
-  <pre><p></p></pre>
-  <MassDownload />
+  <div class="box">
+      <MassDownload />
+  </div>
   <pre><p> </p></pre>
 </template>
 
