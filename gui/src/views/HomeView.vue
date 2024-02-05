@@ -26,8 +26,8 @@ input{
     background-color: rgb(245, 250, 255);
 }
 input:hover{
-    background-color: rgb(230, 235, 240);
-    transition: 700ms;
+    background-color: rgb(216, 220, 224);
+    transition: 400ms;
 }
 input:focus{
     border: 2px solid rgb(125, 185, 255);
