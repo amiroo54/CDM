@@ -86,7 +86,7 @@ async function download(downloadObject, startCallback, endCallback, updateCallba
  * @param {query.query} query - the query to download.
  * @param {number} numOfDownloads - number of simultaneos downloads. 
  * @param {CallableFunction} updateCallBack - Callback called when reciving data.
- * @returns 
+ * @returns {void}
  */
 function downloadList(query, numOfDownloads, updateCallBack)
 {
