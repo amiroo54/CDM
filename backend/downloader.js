@@ -1,6 +1,7 @@
 const https = require("https");
 const fs = require("fs");
 const path = require("path");
+const query = require("./query")
 function getSpeedFromStartTime(start, size)
 {
     let endTime = new Date();
@@ -8,6 +9,14 @@ function getSpeedFromStartTime(start, size)
     return speed = size / (timeDiff / 1000);
 }
 
+/**
+ * 
+ * @param {query.downloadObject} downloadObject - Object to download.
+ * @param {CallableFunction} startCallback - Callback called after starting download.
+ * @param {CallableFunction} endCallback - Callback called after download finish or if download already ended.
+ * @param {CallableFunction} updateCallback - Callback called on reciving data from server.
+ * @returns {https.ClientRequest} Download request object
+ */
 async function download(downloadObject, startCallback, endCallback, updateCallback)
 {
     console.log("Downloading: ", downloadObject.url);
@@ -72,7 +81,13 @@ async function download(downloadObject, startCallback, endCallback, updateCallba
     }).end();
 }
 
-
+/**
+ * 
+ * @param {query.query} query - the query to download.
+ * @param {number} numOfDownloads - number of simultaneos downloads. 
+ * @param {CallableFunction} updateCallBack - Callback called when reciving data.
+ * @returns 
+ */
 function downloadList(query, numOfDownloads, updateCallBack)
 {
     if (query.links.length == 0)
@@ -91,7 +106,10 @@ function downloadList(query, numOfDownloads, updateCallBack)
         } else {return;}
     }
 }
-
+/**
+ * 
+ * @param {query.query} query Pauses the query.
+ */
 function pause(query)
 {
     for (let i = 0; i < query.active.length; i++ )
