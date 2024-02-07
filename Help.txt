@@ -1,0 +1,17 @@
+How to run?
+
+*Is this the first time that you want to run CDM?
+run the following command in 2 directories './backend/' and './gui/':
+npm install
+
+For running the app, use the following command in './gui/':
+npm run serve
+
+**MAKE SURE THAT YOU INSTALLED NPM FOR THAT 2 DIRECTORIES BEFORE**
+
+Report any bug or problem in the github page:
+https://github.com/amiroo54/CDM
+
+Call with us via Telegram:
+https://t.me/amiroo_f/
+https://t.me/MrJavadGG/

@@ -1,16 +1,18 @@
 <template>
-  <pre><p></p></pre>
-  <div class="box">
-      <SingleDownload />
-  </div>
-  <pre><p></p></pre>
-  <div class="box">
-      <MassDownload />
-  </div>
-  <pre><p> </p></pre>
-  <div class="box">
-    <QueryControl />
-  </div>
+    <div class="Ever">
+        <pre><p></p></pre>
+        <div class="box">
+            <SingleDownload />
+        </div>
+        <pre><p></p></pre>
+        <div class="box">
+            <MassDownload />
+        </div>
+        <pre><p> </p></pre>
+        <div class="box">
+        <QueryControl />
+        </div>
+    </div>
 </template>
 
 <style>
@@ -64,6 +66,15 @@ button:focus {
     border: 2px solid #002ca7;
     background-color: rgba(205, 249, 255, 0.2);
 }
+
+.Ever {
+    margin: 5px;
+    padding: 5px;
+    text-align: center;
+    border: 1px solid #002ca7;
+    background-color: rgba(205, 249, 255, 0.4);
+}
+
 </style>
 
 <script>
