@@ -1,6 +1,4 @@
-const { data } = require("cheerio/lib/api/attributes");
-const downloader = require("./downloader");
-const fs = require("fs");
+
 /**
  * A query to download.
  */
@@ -16,6 +14,11 @@ class query
      * @type {Array<downloadObject>}
      */
     active = [];
+    /**
+     * a list of all pending downloads to be used with clearTimeout.
+     * @type {Array}
+     */
+    pending = [];
     /**
      * a list of all finished downloads.
      * @type {Array<downloadObject>}
@@ -34,7 +37,7 @@ class query
     /**
      * 
      * @param {string} name - Name of the query.
-     * @param {Date} startTime - Date to which start the download automatically.
+     * @param {Date} startTime - Date to which start the download automatically. if unidentified is passed will treat as a unset download list.
      */
     constructor(name, startTime) 
     {
