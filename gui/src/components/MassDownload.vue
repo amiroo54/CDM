@@ -1,10 +1,14 @@
 <template>
+    <h2>Mass Download</h2>
     <input placeholder="URL" ref="URL" id="URL">
-    <input placeholder=".exa, .mp, .le" ref="extentions">
+    <input placeholder=".rar, .zip, .7z" ref="extentions">
     <button ref="send" @click="send">Send</button>
-    <div id="list">   
-        <ListLink v-for="(link, index) in links" :url="link.url"/>
+    <div id="list" v-if="is_sent">   
+        <ListLink v-for="(link, index) in links" :url="link" 
+        v-model="download_links"
+        @checkbox-updated="updateDownloadLinks"/>
     </div>
+    <button v-if="is_sent" @click="download">Download</button>
 </template>
 
 <style>
@@ -23,7 +27,9 @@ export default
     data() 
     {
         return {
-            links: [{url:"fdssaf"}, {url:"gklhasd"}]
+            links: [], 
+            is_sent: false,
+            download_links: [],
         }
     },
     components: 
@@ -36,6 +42,15 @@ export default
         {     
             var extentions = this.$refs.extentions.value.split(",");
             var url = this.$refs.URL.value;
+            if (extentions == "")
+            {
+                //add some popup.
+                extentions = [".rar", ".zip", ".7z"];
+            }
+            if (url == "")
+            {
+                return;
+            }
             fetch("/mass", 
             {
                 method: "POST", 
@@ -50,10 +65,45 @@ export default
                     })
             }).then(async (res) => 
             {
+                this.is_sent = true;
                 let linksFound = await res.json();
                 this.links = linksFound;
-                console.log(this.links);
             })
+        },
+        download()
+        {
+            console.log(this.download_links);
+            let req = {
+                method: "POST",
+                headers: 
+                {
+                    "Content-type" : "application/json",
+                },
+                body: JSON.stringify(
+                {
+                    "links" : this.download_links,
+                })
+            } 
+            fetch("/list", req ).then((res) => 
+            {
+                if (res.status == 200)
+                {
+                    is_sent = false;
+                }
+            });
+        },
+        updateDownloadLinks(selection) {
+            if (selection.checked) 
+            {
+                this.download_links.push(selection.url);
+            } else 
+            {
+                const index = this.download_links.indexOf(selection.url);
+                if (index > -1) 
+                {
+                    this.download_links.splice(index, 1);
+                }
+            }
         }
     }           
 }

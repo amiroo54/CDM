@@ -81,11 +81,12 @@ app.post("/mass", (req, res) =>
     })    
 })    
 
+
 app.post("/list", (req, res) => 
 {
     console.log("Links recived to download: ", req.body['links']);
     let qname = req.query.name? req.query.name : decodeURIComponent(req.body['links'][0].split("/").pop());
-    let q = new query.query(qname, Date.now());
+    let q = new query.query(qname, req.query.date); 
     let linksToDownload = []
     for (let i = 0; i < req.body['links'].length; i++)
     {
@@ -93,7 +94,7 @@ app.post("/list", (req, res) =>
         linksToDownload.push(req.body['links'][i]);
     }
     queries.push(q);
-    downloader.downloadList(q, 1, (progress) => 
+    downloader.downloadQuery(q, 1, (progress) => 
     {
         //console.log("Progress: ", progress);
     });    
@@ -110,9 +111,9 @@ app.post("/pause", (req, res) =>
 
 app.get("/queries", (req, res) => //THIS IS TEMPORARY, SHOULD BE REPLACED. maybe not.
 {  
-    let names = queries.map(query => query.name);
+    let q = JSON.stringify(queries);
     res.status = 200;
-    res.send(names);
+    res.send(q);
 })
 
 app.listen(3000, () => 

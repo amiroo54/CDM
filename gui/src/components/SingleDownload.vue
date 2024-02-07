@@ -1,7 +1,7 @@
 <template>
     <h2>Single Download</h2>
     <input placeholder="URL" ref="single">
-    <button id="download" @click="onClick">Download</button>
+    <button id="download" @click="download">Download</button>
 </template>
 
 <style scoped>
@@ -15,7 +15,7 @@ export default
 {
     methods: 
     {
-        onClick()
+        download()
         {
             let link = this.$refs.single.value;
             console.log(link);
