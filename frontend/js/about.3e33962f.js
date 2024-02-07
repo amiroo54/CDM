@@ -1,2 +1,2 @@
 "use strict";(self["webpackChunkgui"]=self["webpackChunkgui"]||[]).push([[152],{6352:function(n,u,s){s.r(u),s.d(u,{default:function(){return o}});var t=s(4108);const e={class:"about"},r=(0,t.QD)("h1",null,"This is a settings page",-1),a=[r];function c(n,u){return(0,t.Wz)(),(0,t.An)("div",e,a)}var i=s(4100);const f={},l=(0,i.c)(f,[["render",c]]);var o=l}}]);
-//# sourceMappingURL=about.6683bd0d.js.map
+//# sourceMappingURL=about.3e33962f.js.map

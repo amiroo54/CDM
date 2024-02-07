@@ -8,6 +8,7 @@
         v-model="download_links"
         @checkbox-updated="updateDownloadLinks"/>
     </div>
+    <QueryDate v-if="is_sent" id="time" ref="time"/>
     <button v-if="is_sent" @click="download">Download</button>
 </template>
 
@@ -22,6 +23,7 @@
 
 <script>
 import ListLink from "./ListLink.vue";
+import QueryDate from "./QueryDate.vue";
 export default 
 {
     data() 
@@ -34,7 +36,8 @@ export default
     },
     components: 
     {
-        ListLink
+        ListLink,
+        QueryDate
     },
     methods: 
     {
@@ -73,6 +76,18 @@ export default
         download()
         {
             console.log(this.download_links);
+            let timeComp = this.$refs.time;
+            let downloadDate = new Date();
+            if (timeComp.selection == 2)
+            {
+                let [hour, minute] = timeComp.time.split(':');
+                downloadDate.setHours(hour, minute, 0);
+            }
+            else if (timeComp.selection == 1)
+            {
+                downloadDate = undefined;
+            }
+            console.log(downloadDate);
             let req = {
                 method: "POST",
                 headers: 
@@ -82,6 +97,7 @@ export default
                 body: JSON.stringify(
                 {
                     "links" : this.download_links,
+                    "date" : downloadDate
                 })
             } 
             fetch("/list", req ).then((res) => 

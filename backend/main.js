@@ -10,6 +10,10 @@ const path = require("path");
 app.use(require("body-parser").json())
 app.use(require("express").static("frontend"));
 
+/**
+ * a list of all queries.
+ * @type {Array<query.query>}
+ */
 let queries = [];
 let variousFiles = new query.query("Various Files", null);
 queries.push(variousFiles);
@@ -111,7 +115,22 @@ app.post("/pause", (req, res) =>
 
 app.get("/queries", (req, res) => //THIS IS TEMPORARY, SHOULD BE REPLACED. maybe not.
 {  
-    let q = JSON.stringify(queries);
+    
+    let q = queries.map((value) => 
+    {
+        return {
+            name: value.name, 
+            startTime: value.startTime,
+            links: value.links.map((link) => 
+            {
+                return {
+                    name: link.getFileName(),
+                    url: link.url,
+                    size: link.size
+                }
+            }),
+        }
+    });
     res.status = 200;
     res.send(q);
 })
