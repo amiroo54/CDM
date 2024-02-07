@@ -1,4 +1,5 @@
 <template>
+    <h2>Mass Download</h2>
     <input placeholder="URL" ref="URL" id="URL">
     <input placeholder=".rar, .zip, .7z" ref="extentions">
     <button ref="send" @click="send">Send</button>
@@ -26,7 +27,7 @@ export default
     data() 
     {
         return {
-            links: ["fdsfs", "dfasfdsa"], 
+            links: [], 
             is_sent: false,
             download_links: [],
         }
@@ -83,7 +84,13 @@ export default
                     "links" : this.download_links,
                 })
             } 
-            fetch("/list", req );
+            fetch("/list", req ).then((res) => 
+            {
+                if (res.status == 200)
+                {
+                    is_sent = false;
+                }
+            });
         },
         updateDownloadLinks(selection) {
             if (selection.checked) 
