@@ -98,9 +98,10 @@ function downloadQuery(query, numOfDownloads, updateCallBack)
     {
         return;
     }
-    console.log("Starting Download");
+    console.log("Starting Download in ", (query.startTime.getTime() - Date.now()) / 60000, "minutes");
     query.pending.push(setTimeout(() =>
     {
+        console.log("Starting Download Query: ", query.name);
         query.active.push(
             download(query.getNextLink(), () => {}, endCallback,updateCallBack)
         )

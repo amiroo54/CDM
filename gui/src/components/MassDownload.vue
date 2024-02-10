@@ -100,11 +100,12 @@ export default
                     "date" : downloadDate
                 })
             } 
+            console.log(req);
             fetch("/list", req ).then((res) => 
             {
                 if (res.status == 200)
                 {
-                    is_sent = false;
+                    this.is_sent = false;
                 }
             });
         },

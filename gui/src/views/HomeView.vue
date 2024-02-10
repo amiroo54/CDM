@@ -70,7 +70,7 @@ button:focus {
 // @ is an alias to /src
 import SingleDownload from '@/components/SingleDownload.vue';
 import MassDownload from '@/components/MassDownload.vue';
-import QueryControl from '@/components/QueryControl.vue';
+import QueryControl from '@/components/Query/QueryControl.vue';
 export default {
   name: 'HomeView',
   components: {

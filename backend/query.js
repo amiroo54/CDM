@@ -49,10 +49,6 @@ class query
      * @param {downloadObject} link - object to download.
      */
     addLink(link) {
-        if (typeof(link) == "string")
-        {
-            link = new URL(link);
-        }
         this.links.push(link);
         link.query = this;
     }

@@ -89,8 +89,13 @@ app.post("/mass", (req, res) =>
 app.post("/list", (req, res) => 
 {
     console.log("Links recived to download: ", req.body['links']);
-    let qname = req.query.name? req.query.name : decodeURIComponent(req.body['links'][0].split("/").pop());
-    let q = new query.query(qname, req.query.date); 
+    if (req.body['links'].length == 0)
+    {
+        res.status = 304;
+        res.send();
+    }
+    let qname = req.body['name']? req.body['name'] : decodeURIComponent(req.body['links'][0].split("/").pop());
+    let q = new query.query(qname, new Date(req.body['date'])); 
     let linksToDownload = []
     for (let i = 0; i < req.body['links'].length; i++)
     {
