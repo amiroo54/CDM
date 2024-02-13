@@ -27,12 +27,11 @@ export default
             fetch("/queries").then(async (res) => 
             {
                 let data = await res.json();
-                console.log(data);
                 this.queries = data;
             })
         }
     },
-    created()
+    mounted()
     {
         this.getQueries();
     },

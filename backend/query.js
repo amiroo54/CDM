@@ -5,6 +5,11 @@
 class query
 {
     /**
+     * a socket for sending the progress data.
+     * @type {Array<WebSocket>}
+     */
+    sockets = [];
+    /**
      * a list of all the links in the query.
      * @type {Array<downloadObject>}
      */
@@ -61,6 +66,29 @@ class query
     {
         return this.links[this.finished.length + this.active.length];
     }
+    /**
+     * returns the name to be use in urls.
+     * @returns {string}
+     */
+    getCleanName()
+    {
+        return this.name.toLowerCase().trim().replace(" ", "");
+    }
+    /**
+     * converts the object to json
+     * @returns {Object}
+     */
+    toJSON()
+    {
+        return {
+            name: this.name,
+            links: this.links,
+            active: this.active,
+            pending: this.pending,
+            finished: this.finished, 
+            startTime: this.startTime
+        }
+    }
 }
 
 /**
@@ -116,6 +144,17 @@ class downloadObject
         let splits = this.url.pathname.split("/");
         let final = decodeURIComponent(splits[splits.length - 1].split("?")[0]); // removing the ? at the end of the links.
         return final;
+    }
+    toJSON()
+    {
+        return {
+            size: this.size,
+            downloadedSize: this.downloadedSize,
+            url: this.url,
+            path: this.path, 
+            finished: this.finished,
+            name: this.getFileName()
+        }
     }
 }
 

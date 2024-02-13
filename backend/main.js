@@ -6,17 +6,22 @@ const { json } = require("express");
 const downloader = require('./downloader') 
 const query = require("./query");
 const path = require("path");
+const ws = require("ws");
 
 app.use(require("body-parser").json())
 app.use(require("express").static("frontend"));
 
 /**
  * a list of all queries.
- * @type {Array<query.query>}
+ * @type {Object<query.query>}
  */
-let queries = [];
+let queries = {};
+/**
+ * query for single files.
+ * @type {query.query}
+ */
 let variousFiles = new query.query("Various Files", null);
-queries.push(variousFiles);
+queries[variousFiles.getCleanName()] = variousFiles;
 const downloadFolder = path.join(require("os").homedir(), "Downloads");
 
 app.get("/", (req, res) => 
@@ -32,15 +37,14 @@ app.post("/single", (req, res) =>
     let link = req.body['link'];
     console.log("a Link recived to download: ", link);
     variousFiles.addLink(new query.downloadObject(link, downloadFolder));
-    downloader.downloadList(variousFiles, downloadFolder, () => {}, () => {}, (progress) => 
+    downloader.downloadQuery(variousFiles, downloadFolder, () => {}, () => {}, (progress) => 
     {
         console.log("Progress: ", progress);
+        variousFiles.socket.send(JSON.stringify(variousFiles));
     })
     res.status = 200;
     res.send();
 })
-
-
 
 app.post("/mass", (req, res) => 
 {
@@ -89,7 +93,7 @@ app.post("/mass", (req, res) =>
 app.post("/list", (req, res) => 
 {
     console.log("Links recived to download: ", req.body['links']);
-    if (req.body['links'].length == 0)
+    if (req.body['links'] == [])
     {
         res.status = 304;
         res.send();
@@ -102,10 +106,16 @@ app.post("/list", (req, res) =>
         q.addLink(new query.downloadObject(req.body['links'][i], downloadFolder));
         linksToDownload.push(req.body['links'][i]);
     }
-    queries.push(q);
+    queries[q.getCleanName()] = q;
     downloader.downloadQuery(q, 1, (progress) => 
     {
-        //console.log("Progress: ", progress);
+        if (q.sockets != [])
+        {
+            q.sockets.forEach((s) => 
+            {
+                s.send(JSON.stringify(q));  
+            })
+        }
     });    
     res.status = 200;
     res.send();
@@ -121,26 +131,33 @@ app.post("/pause", (req, res) =>
 app.get("/queries", (req, res) => //THIS IS TEMPORARY, SHOULD BE REPLACED. maybe not.
 {  
     
-    let q = queries.map((value) => 
+    let q = Object.keys(queries).map((value) => 
     {
-        return {
-            name: value.name, 
-            startTime: value.startTime,
-            links: value.links.map((link) => 
-            {
-                return {
-                    name: link.getFileName(),
-                    url: link.url,
-                    size: link.size
-                }
-            }),
-        }
+        value = queries[value];
+        return value.toJSON();
     });
     res.status = 200;
     res.send(q);
 })
 
-app.listen(3000, () => 
+
+//ws bs.
+const server = require("http").createServer(app);
+const wss = new ws.WebSocket.Server({ server });
+
+wss.on("connection", (ws, req) =>
+{
+    const q = req.url.substring(1);
+    console.log("Got a request to ", q);
+    if (queries[q])
+    {
+        console.log("Found");
+        queries[q].sockets.push(ws);
+    }
+})
+
+
+server.listen(3000, () => 
 {
     console.log("Server started on:")
     console.log("Local: http://localhost:3000")

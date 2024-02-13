@@ -33,6 +33,11 @@ async function download(downloadObject, startCallback, endCallback, updateCallba
     if (fs.existsSync(downloadObject.path))
     {
         let range = fs.statSync(downloadObject.path).size;
+        if (downloadObject.downloadedSize != range)
+        {
+            console.log("wtf");
+            downloadObject.downloadedSize = range;
+        }
         Object.assign(options.headers, {Range: `bytes=${range}-`});
     }
     console.log(options);
@@ -44,10 +49,10 @@ async function download(downloadObject, startCallback, endCallback, updateCallba
             downloadObject.url = new URL(res.headers.location);
             return download(downloadObject, startCallback, endCallback, updateCallback);
         }
-        const size = res.headers['content-length'];
+        const size = res.headers['content-length'] + downloadObject.downloadedSize; //when using bytes= in header the content length in the size to be recived not the full size.
         if (!downloadObject.size)
         {
-            downloadObject.size = size; // setting the inital size, for displaying correct progress.
+            downloadObject.size = parseInt(size); // setting the inital size, for displaying correct progress.
         }
         console.log("Recive file size: ", size);
         const startTime = new Date();

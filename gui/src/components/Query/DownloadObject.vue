@@ -1,7 +1,6 @@
 <template>
     <p>{{ download.name }}</p>
-    <p>{{ download.url }}</p>
-    <p>{{ download.size }}</p>
+    <progress v-bind:value="percent" max=1></progress>
 </template>
 
 
@@ -11,7 +10,14 @@ export default
 {
     props:
     {
-        download: Object
+        download: Object,
+    },
+    computed:
+    {
+        percent()
+        {
+            return this.download.downloadedSize / this.download.size;
+        }
     }
 }
 </script>
