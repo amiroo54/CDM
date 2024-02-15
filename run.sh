@@ -14,7 +14,7 @@ fi
 frontend_dir="./frontend"
 choice="Y" 
 if [ -d "$frontend_dir" ]; then
-    read -p "Do you want to build the frontend? (Y/n): " choice
+    read -p "Do you want to start the frontend server? (Y/n): " choice
 fi
 
 if [ ! "$choice" = "n" ]; then
