@@ -1,12 +1,31 @@
 <template>
-  <h1 id="h001">Central Download Manager</h1>
-  <router-view/>
+  <div id="b01" class="box">
+    <pre><p></p></pre>
+    <h1 >Central Download Manager</h1>
+    <router-view/>
+  </div>
 </template>
 
 <style>
-#h001 {
-    text-align: center;
-    color: #2932b4;
-    background-color:rgba(205, 249, 255, 0.2);
+h1, h2{
+  text-align: center;
+  color: #011936ff;
 }
+#b01{
+  margin: auto;
+  padding: 10px;
+  border: 3px solid #41569fff;
+  background-color:rgba(196, 221, 253, 0.4);
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+.box {
+  border-radius: 8px;
+  margin: 5px;
+  padding: 5px;
+  text-align: center;
+  border: 2px solid #41569fff;
+  background-color: rgba(196, 221, 253, 0.6);
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
 </style>

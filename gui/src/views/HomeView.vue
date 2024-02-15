@@ -1,5 +1,4 @@
 <template>
-  <pre><p></p></pre>
   <div class="box">
       <SingleDownload />
   </div>
@@ -17,11 +16,11 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
     background-image: url("../assets/2.svg");
-    border: 1px solid #002ca7;
     background-color: rgba(205, 249, 255, 0.2);
 }
 
 input {
+    border-radius: 5px;
     text-align: center;
     margin: 5px;
     padding: 5px;
@@ -30,39 +29,32 @@ input {
 }
 input:hover{
     background-color: rgb(230, 235, 240);
-    transition: 700ms;
+    transition: 500ms;
 }
 input:focus {
-    border: 2px solid rgb(125, 185, 255);
-    transition: 1.5s;
+    border: 2px solid #41569fff;
+    transition: 1s;
 }
 
 button {
+    border-radius: 8px;
     text-align: center;
-    border: 1px solid #002ca7;
+    border: 1px solid #41569fff;
     margin: 5px;
     padding: 5px;
-    background-color: rgb(140, 230, 250);
-    color: rgb(1, 25, 54);
+    background-color: #8cbcfaff;
+    color: #011936ff;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
 button:hover {
-    background-color: rgb(150, 250, 255);
+    background-color: rgb(171, 207, 255);
     color: rgb(2, 44, 95);
-    transition: 400ms;
+    transition: 200ms;
 }
 button:focus {
-    background-color: rgb(0, 90, 110);
-    color: rgb(186, 206, 231);
-    transition: 400ms;
-}
-
-.box {
-    margin: 5px;
-    padding: 5px;
-    text-align: center;
-    border: 2px solid #002ca7;
-    background-color: rgba(205, 249, 255, 0.2);
+    background-color: rgb(119, 159, 211);
+    color: #142b55ff;
+    transition: 200ms;
 }
 </style>
 

@@ -17,7 +17,7 @@
     width: 70%;
 }
 #extentions {
-    width: 10%;
+    width: 5px;
 }
 </style>
 
