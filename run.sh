@@ -20,8 +20,14 @@ fi
 if [ ! "$choice" = "n" ]; then
     mkdir frontend
     cd gui
-    npm run build
+    npm run serve &
     cd ..
 fi
 
-node ./backend/main.js
+if which nodemon > /dev/null 
+    then
+        node ./backend/main.js &
+    else
+        nodemon ./backend/main.js &
+fi
+wait
