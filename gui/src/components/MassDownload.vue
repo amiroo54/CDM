@@ -1,7 +1,7 @@
 <template>
     <h2>Mass Download</h2>
     <input placeholder="URL" ref="URL" id="URL">
-    <input placeholder=".rar, .zip, .7z" ref="extentions">
+    <input placeholder=".rar, .zip, .7z" ref="extentions" id="extentions">
     <button ref="send" @click="send">Send</button>
     <div id="list" v-if="is_sent">   
         <ListLink v-for="(link, index) in links" :url="link" 
@@ -17,7 +17,7 @@
     width: 70%;
 }
 #extentions {
-    width: 5px;
+    width: 100px;
 }
 </style>
 

@@ -14,22 +14,26 @@
 
 <style>
 body {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Times New Roman', Times, serif;
     background-image: url("../assets/2.svg");
     background-color: rgba(205, 249, 255, 0.2);
 }
 
 input {
-    border-radius: 5px;
+    border-radius: 10px;
+    box-sizing: border-box;
     text-align: center;
-    margin: 5px;
-    padding: 5px;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    transition: width 0.4s ease-in-out;
+    background-color: #f8f8f8;
+    padding: 7px;
+    margin: 10px;
+    box-shadow: 0 5px rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
     background-color: rgb(245, 250, 255);
 }
 input:hover{
     background-color: rgb(230, 235, 240);
     transition: 500ms;
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.20), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
 input:focus {
     border: 2px solid #41569fff;
@@ -37,24 +41,27 @@ input:focus {
 }
 
 button {
-    border-radius: 8px;
+    display: inline-block;
+    box-shadow: 0 5px rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    border-radius: 10px;
     text-align: center;
     border: 1px solid #41569fff;
-    margin: 5px;
-    padding: 5px;
+    padding: 10px;
+    margin-left: 10px;
     background-color: #8cbcfaff;
     color: #011936ff;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    cursor: pointer;
+    transition-duration: 0.4s;
 }
 button:hover {
     background-color: rgb(171, 207, 255);
-    color: rgb(2, 44, 95);
-    transition: 200ms;
+    color: rgb(15, 50, 94);
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.50), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
-button:focus {
+button:active{
     background-color: rgb(119, 159, 211);
-    color: #142b55ff;
-    transition: 200ms;
+    color: rgb(252, 253, 255);
+    transform: translateY(4px);
 }
 </style>
 

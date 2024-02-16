@@ -12,14 +12,13 @@ h1, h2{
   color: #011936ff;
 }
 #b01{
-  margin: auto;
-  padding: 10px;
+  margin: 8% 30px 8% 30px;
   border: 3px solid #41569fff;
   background-color:rgba(196, 221, 253, 0.4);
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
 .box {
-  border-radius: 8px;
+  border-radius: 15px;
   margin: 5px;
   padding: 5px;
   text-align: center;
