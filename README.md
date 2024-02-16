@@ -18,5 +18,5 @@ Report any bug or problem in the github page:
 https://github.com/amiroo54/CDM
 
 Contact us via Telegram:
-https://t.me/amiroo_f/
-https://t.me/MrJavadGG/
+amiroo.f: https://t.me/amiroo_f/
+MrJavadGG: https://t.me/MrJavadGG/
