@@ -13,17 +13,18 @@ if [ ! -d "$backend_install_dir" ]; then
 fi
 frontend_dir="./frontend"
 choice="Y" 
-if [ -d "$frontend_dir" ]; then
-    read -p "Do you want to start the frontend server? (Y/n): " choice
-fi
+read -p "Do you want to start the frontend server? (Y/n): " choice
 
 if [ ! "$choice" = "n" ]; then
-    mkdir frontend
     cd gui
     npm run serve &
     cd ..
+else
+    mkdir frontend
+    cd gui
+    npm run build
+    cd ..          
 fi
-
 if which nodemon > /dev/null 
     then
         node ./backend/main.js &
