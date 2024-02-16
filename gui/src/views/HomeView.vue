@@ -1,5 +1,4 @@
 <template>
-  <pre><p></p></pre>
   <div class="box">
       <SingleDownload />
   </div>
@@ -15,54 +14,54 @@
 
 <style>
 body {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Times New Roman', Times, serif;
     background-image: url("../assets/2.svg");
-    border: 1px solid #002ca7;
     background-color: rgba(205, 249, 255, 0.2);
 }
 
 input {
+    border-radius: 10px;
+    box-sizing: border-box;
     text-align: center;
-    margin: 5px;
-    padding: 5px;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    transition: width 0.4s ease-in-out;
+    background-color: #f8f8f8;
+    padding: 7px;
+    margin: 10px;
+    box-shadow: 0 5px rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
     background-color: rgb(245, 250, 255);
 }
 input:hover{
     background-color: rgb(230, 235, 240);
-    transition: 700ms;
+    transition: 500ms;
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.20), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
 input:focus {
-    border: 2px solid rgb(125, 185, 255);
-    transition: 1.5s;
+    border: 2px solid #41569fff;
+    transition: 1s;
 }
 
 button {
+    display: inline-block;
+    box-shadow: 0 5px rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    border-radius: 10px;
     text-align: center;
-    border: 1px solid #002ca7;
-    margin: 5px;
-    padding: 5px;
-    background-color: rgb(140, 230, 250);
-    color: rgb(1, 25, 54);
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    border: 1px solid #41569fff;
+    padding: 10px;
+    margin-left: 10px;
+    background-color: #8cbcfaff;
+    color: #011936ff;
+    cursor: pointer;
+    transition-duration: 0.4s;
 }
 button:hover {
-    background-color: rgb(150, 250, 255);
-    color: rgb(2, 44, 95);
-    transition: 400ms;
+    background-color: rgb(171, 207, 255);
+    color: rgb(15, 50, 94);
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.50), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
-button:focus {
-    background-color: rgb(0, 90, 110);
-    color: rgb(186, 206, 231);
-    transition: 400ms;
-}
-
-.box {
-    margin: 5px;
-    padding: 5px;
-    text-align: center;
-    border: 2px solid #002ca7;
-    background-color: rgba(205, 249, 255, 0.2);
+button:active{
+    background-color: rgb(119, 159, 211);
+    color: rgb(252, 253, 255);
+    transform: translateY(4px);
 }
 </style>
 
