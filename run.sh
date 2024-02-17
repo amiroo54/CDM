@@ -25,10 +25,9 @@ else
     npm run build
     cd ..          
 fi
-if which nodemon > /dev/null 
-    then
-        node ./backend/main.js &
-    else
-        nodemon ./backend/main.js &
+if command -v nodemon > /dev/null 2>&1; then  
+    nodemon ./backend/main.js &
+else
+    node ./backend/main.js &
 fi
 wait
