@@ -1,8 +1,7 @@
 <template>
   <Header />
   <div id="b01" class="box">
-    <pre><p></p></pre>
-    <h1 >Central Download Manager</h1>
+    
     <router-view/>
   </div>
   <Footer />
