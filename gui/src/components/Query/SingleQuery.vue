@@ -29,6 +29,7 @@ export default
     mounted()
     {
         this.data = this.query;
+        console.log(`ws://${window.location.host}/${this.query.name.toLowerCase().trim().replace(" ", "")}`)
         this.socket = new WebSocket(`ws://${window.location.host}/${this.query.name.toLowerCase().trim().replace(" ", "")}`)
         this.socket.onmessage = (event) =>
         {

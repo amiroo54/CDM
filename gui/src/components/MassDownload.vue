@@ -108,6 +108,7 @@ export default
                     this.is_sent = false;
                 }
             });
+            this.$emit("start");
         },
         updateDownloadLinks(selection) {
             if (selection.checked) 
