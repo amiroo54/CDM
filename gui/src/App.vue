@@ -1,9 +1,11 @@
 <template>
+  <Header />
   <div id="b01" class="box">
     <pre><p></p></pre>
     <h1 >Central Download Manager</h1>
     <router-view/>
   </div>
+  <Footer />
 </template>
 
 <style>
@@ -28,3 +30,13 @@ h1, h2{
 }
 
 </style>
+
+<script>
+import Footer from './components/Footer.vue';
+import Header from './components/Header.vue';
+
+export default
+{
+  components: {Footer, Header}
+}
+</script>
