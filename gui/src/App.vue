@@ -14,17 +14,17 @@ h1, h2{
 }
 #b01{
   margin: 8% 30px 8% 30px;
-  border: 3px solid #41569fff;
-  background-color:rgba(196, 221, 253, 0.4);
+  border: 6px solid #41569fff;
+  background-color: rgb(158, 200, 255);
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
-.box {
+.box{
   border-radius: 15px;
   margin: 5px;
-  padding: 5px;
+  padding: 15px;
   text-align: center;
-  border: 2px solid #41569fff;
-  background-color: rgba(196, 221, 253, 0.6);
+  border: 3px solid #41569fff;
+  background-color: rgb(196, 221, 255);
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
 

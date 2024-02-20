@@ -4,11 +4,10 @@
     <input placeholder=".rar, .zip, .7z" ref="extentions" id="extentions">
     <button ref="send" @click="send">Send</button>
     <div id="list" v-if="is_sent">   
-        <ListLink v-for="(link, index) in links" :url="link" 
-        v-model="download_links"
-        @checkbox-updated="updateDownloadLinks"/>
+        <ListLink v-for="(link, index) in links" :url="link" v-model="download_links" @checkbox-updated="updateDownloadLinks"/>
     </div>
     <QueryDate v-if="is_sent" id="time" ref="time"/>
+    <pre><p></p></pre>
     <button v-if="is_sent" @click="download">Download</button>
 </template>
 
