@@ -1,6 +1,6 @@
 <template>
   <div class="box">
-      <SingleDownload />
+      <SingleDownload @start="this.$refs.query.getQueries()" />
   </div>
   <pre><p></p></pre>
   <div class="box">

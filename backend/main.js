@@ -20,7 +20,7 @@ let queries = {};
  * query for single files.
  * @type {query.query}
  */
-let variousFiles = new query.query("Various Files", null);
+let variousFiles = new query.query("Various Files", new Date());
 queries[variousFiles.getCleanName()] = variousFiles;
 const downloadFolder = path.join(require("os").homedir(), "Downloads");
 
@@ -40,7 +40,13 @@ app.post("/single", (req, res) =>
     downloader.downloadQuery(variousFiles, downloadFolder, () => {}, () => {}, (progress) => 
     {
         console.log("Progress: ", progress);
-        variousFiles.socket.send(JSON.stringify(variousFiles));
+        if (variousFiles.sockets != [])
+        {
+            variousFiles.sockets.forEach((s) => 
+            {
+                s.send(JSON.stringify(q));  
+            })
+        }
     })
     res.status = 200;
     res.send();

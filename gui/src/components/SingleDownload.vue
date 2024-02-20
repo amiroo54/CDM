@@ -32,6 +32,7 @@ export default
             {
                 console.log("done");
             })
+            this.$emit("start");
         }
     }
 }
