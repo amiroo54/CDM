@@ -4,11 +4,11 @@
   </div>
   <pre><p></p></pre>
   <div class="box">
-      <MassDownload />
+      <MassDownload @start="this.$refs.query.getQueries()" />
   </div>
   <pre><p> </p></pre>
   <div class="box">
-    <QueryControl />
+    <QueryControl ref="query" />
   </div>
 </template>
 
