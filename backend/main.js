@@ -13,7 +13,7 @@ app.use(require("express").static("frontend"));
 
 /**
  * a list of all queries.
- * @type {Object<query.query>}
+ * @type {{String: query.query}}
  */
 let queries = {};
 /**
@@ -148,12 +148,15 @@ const wss = new ws.WebSocket.Server({ server });
 wss.on("connection", (ws, req) =>
 {
     const q = req.url.substring(1);
-    console.log("Got a request to ", q);
     if (queries[q])
     {
-        console.log("Found");
         queries[q].sockets.push(ws);
     }
+    ws.on("close", () =>
+    {
+        queries[q].sockets.splice(queries[q].sockets.indexOf(ws), 1);
+        console.log(queries);
+    })
 })
 
 
