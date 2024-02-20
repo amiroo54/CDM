@@ -11,7 +11,7 @@
 {
     position: relative;
     width: 100%;
-    height: 20px;
+    height: 50px;
     overflow: hidden;
     border-radius: 5px;
 }
@@ -20,7 +20,11 @@ progress
     position: absolute;
     width: 100%;
     height: 100%;
+<<<<<<< HEAD
     left: 0;
+=======
+    height: 50px;
+>>>>>>> cf9922f (Nothing special (styles))
 }
 
 .label
