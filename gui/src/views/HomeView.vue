@@ -15,8 +15,8 @@
 <style>
 body {
     font-family: 'Times New Roman', Times, serif;
-    background-image: url("../assets/2.svg");
-    background-color: rgba(205, 249, 255, 0.2);
+    background-image: linear-gradient(45deg,#c4ddfdff,#b5d4fcff,#a3c9fbff,#8cbcfaff,#5c7ac0ff,#506ab1ff,#41569fff,#233a6eff,#142b55ff,#011936ff);
+    /*background-image: linear-gradient(45deg,#41569fff,#233a6eff,#011936ff,#41569fff,#233a6eff,#142b55ff,#011936ff);*/
 }
 
 input {
@@ -26,9 +26,12 @@ input {
     transition: width 0.4s ease-in-out;
     background-color: #f8f8f8;
     padding: 7px;
+    width: 80%;
     margin: 10px;
     box-shadow: 0 5px rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
     background-color: rgb(245, 250, 255);
+    text-overflow: ellipsis ellipsis;
+    font-size: 12px;
 }
 input:hover{
     background-color: rgb(230, 235, 240);
