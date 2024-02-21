@@ -7,6 +7,7 @@ const downloader = require('./downloader')
 const query = require("./query");
 const path = require("path");
 const ws = require("ws");
+const Debug = require("./logger");
 
 app.use(require("body-parser").json())
 app.use(require("express").static("frontend"));
@@ -35,11 +36,11 @@ app.get("/", (req, res) =>
 app.post("/single", (req, res) => 
 {
     let link = req.body['link'];
-    console.log("a Link recived to download: ", link);
+    Debug.info("a Link recived to download: ", link);
     variousFiles.addLink(new query.downloadObject(link, downloadFolder));
     downloader.downloadQuery(variousFiles, downloadFolder, () => {}, () => {}, (progress) => 
     {
-        console.log("Progress: ", progress);
+        Debug.info("Progress: ", progress);
         if (variousFiles.sockets != [])
         {
             variousFiles.sockets.forEach((s) => 
@@ -55,7 +56,7 @@ app.post("/single", (req, res) =>
 app.post("/mass", (req, res) => 
 {
     let pageURL = req.body['URL'];
-    console.log("Recived mass download with url: ", pageURL);
+    Debug.info("Recived mass download with url: ", pageURL);
     let extentions = req.body['extentions'];
     fetch(pageURL).then(async (pageres, err) =>
     {
@@ -71,7 +72,7 @@ app.post("/mass", (req, res) =>
         let document = page.window.document;
         let links = document.querySelectorAll("a");
         let linksToDownload = []
-        console.log("Recived extentions: ", extentions);
+        Debug.info("Recived extentions: ", extentions);
         for (let i = 0; i < links.length; i++)
         {
             for (let e = 0; e < extentions.length; e++)
@@ -88,7 +89,7 @@ app.post("/mass", (req, res) =>
                 }     
             }    
         }    
-        console.log("Final List: ", linksToDownload);
+        Debug.info("Final List: ", linksToDownload);
         
         res.status = 200;
         res.send(linksToDownload);
@@ -98,7 +99,7 @@ app.post("/mass", (req, res) =>
 
 app.post("/list", (req, res) => 
 {
-    console.log("Links recived to download: ", req.body['links']);
+    Debug.info("Links recived to download: ", req.body['links']);
     if (req.body['links'] == [])
     {
         res.status = 304;
@@ -130,7 +131,7 @@ app.post("/list", (req, res) =>
 app.post("/pause", (req, res) => 
 {
     let q = req.query.query;
-    console.log("Pausing: ", q);
+    Debug.info("Pausing: ", q);
 
 })
 
@@ -161,15 +162,14 @@ wss.on("connection", (ws, req) =>
     ws.on("close", () =>
     {
         queries[q].sockets.splice(queries[q].sockets.indexOf(ws), 1);
-        console.log(queries);
     })
 })
 
 
 server.listen(3000, () => 
 {
-    console.log("Server started on:")
-    console.log("Local: http://localhost:3000")
+    Debug.info("Server started on:")
+    Debug.info("Local: http://localhost:3000")
     const { networkInterfaces } = require('os');
     const nets = networkInterfaces();
     for (const name of Object.keys(nets)) 
@@ -179,7 +179,7 @@ server.listen(3000, () =>
             const familyV4 = typeof net.family === 'string' ? 'IPv4' : 4
             if (net.family === familyV4 && !net.internal)
             {
-                console.log("Network: http://" + net.address + ":3000");
+                Debug.info("Network: http://" + net.address + ":3000");
             } 
         }
     }

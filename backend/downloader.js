@@ -1,7 +1,8 @@
 const https = require("https");
 const fs = require("fs");
 const path = require("path");
-const query = require("./query")
+const query = require("./query");
+const Debug = require("./logger");
 function getSpeedFromStartTime(start, size)
 {
     let endTime = new Date();
@@ -19,11 +20,11 @@ function getSpeedFromStartTime(start, size)
  */
 async function download(downloadObject, startCallback, endCallback, updateCallback)
 {
-    console.log("Downloading: ", downloadObject.url);
+    Debug.info("Downloading: ", downloadObject.url);
     let urlObj = new URL(downloadObject.url);
     if (downloadObject.ended)
     {
-        console.log("File already downloaded.");
+        Debug.warn("File already downloaded.");
         endCallback(downloadObject);
     }
     let options = {
@@ -35,15 +36,15 @@ async function download(downloadObject, startCallback, endCallback, updateCallba
         let range = fs.statSync(downloadObject.path).size;
         if (downloadObject.downloadedSize != range)
         {
-            console.log(`${range} and ${downloadObject.downloadedSize} are not the same`);
+            Debug.warn(`${range} and ${downloadObject.downloadedSize} are not the same`);
             downloadObject.downloadedSize = range;
         }
         Object.assign(options.headers, {Range: `bytes=${range}-`});
     }
-    console.log(options);
+    Debug.info(options);
     return https.get(urlObj, options, (res) =>
     {
-        console.log("Status: ", res.statusCode);
+        Debug.info("Status: ", res.statusCode);
         if (res.statusCode == 301 || res.statusCode == 302)
         {
             downloadObject.url = new URL(res.headers.location);
@@ -52,10 +53,10 @@ async function download(downloadObject, startCallback, endCallback, updateCallba
         const size = parseInt(res.headers['content-length']) + downloadObject.downloadedSize; //when using bytes= in header the content length in the size to be recived not the full size.
         if (!downloadObject.size)
         {
-            console.log(size);
+            Debug.info(size);
             downloadObject.size = parseInt(size); // setting the inital size, for displaying correct progress.
         }
-        console.log("Recive file size: ", size);
+        Debug.info("Recive file size: ", size);
         const startTime = new Date();
         let fileStream = fs.createWriteStream(downloadObject.path, {'flags': 'a', 'encoding': null});
         if (startCallback)
@@ -73,12 +74,12 @@ async function download(downloadObject, startCallback, endCallback, updateCallba
         });
         res.on("error", (err) => 
         {
-            console.error(err);
+            Debug.error(err);
         })
         res.on("end", () => 
         {
-            console.log("Download finished: ", downloadObject.url);
-            console.log("Average Speed: ", getSpeedFromStartTime(startTime, size));
+            Debug.info("Download finished: ", downloadObject.url);
+            Debug.info("Average Speed: ", getSpeedFromStartTime(startTime, size));
             if (endCallback)
             {
                 endCallback(downloadObject);
@@ -104,10 +105,10 @@ function downloadQuery(query, numOfDownloads, updateCallBack)
     {
         return;
     }
-    console.log("Starting Download in ", (query.startTime.getTime() - Date.now()) / 60000, "minutes");
+    Debug.info("Starting Download in ", (query.startTime.getTime() - Date.now()) / 60000, "minutes");
     query.pending.push(setTimeout(() =>
     {
-        console.log("Starting Download Query: ", query.name);
+        Debug.info("Starting Download Query: ", query.name);
         query.active.push(
             download(query.getNextLink(), () => {}, endCallback,updateCallBack)
         )
