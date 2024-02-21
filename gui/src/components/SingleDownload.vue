@@ -4,12 +4,6 @@
     <button id="download" @click="download">Download</button>
 </template>
 
-<style scoped>
-input {
-    width: 80%;
-}
-</style>
-
 <script>
 export default 
 {
