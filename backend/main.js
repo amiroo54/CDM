@@ -38,17 +38,6 @@ app.post("/single", (req, res) =>
     let link = req.body['link'];
     Debug.info("a Link recived to download: ", link);
     variousFiles.addLink(new query.downloadObject(link, downloadFolder));
-    downloader.downloadQuery(variousFiles, downloadFolder, () => {}, () => {}, (progress) => 
-    {
-        Debug.info("Progress: ", progress);
-        if (variousFiles.sockets != [])
-        {
-            variousFiles.sockets.forEach((s) => 
-            {
-                s.send(JSON.stringify(q));  
-            })
-        }
-    })
     res.status = 200;
     res.send();
 })
@@ -114,6 +103,12 @@ app.post("/list", (req, res) =>
         linksToDownload.push(req.body['links'][i]);
     }
     queries[q.getCleanName()] = q;
+    res.status = 200;
+    res.send();
+})    
+
+app.post("/start", (req, res) =>
+{
     downloader.downloadQuery(q, 1, (progress) => 
     {
         if (q.sockets != [])
@@ -124,15 +119,15 @@ app.post("/list", (req, res) =>
             })
         }
     });    
-    res.status = 200;
-    res.send();
-})    
+})
 
 app.post("/pause", (req, res) => 
 {
     let q = req.query.query;
     Debug.info("Pausing: ", q);
-
+    downloader.pause(q);
+    res.statusCode = 200;
+    res.send();
 })
 
 app.get("/queries", (req, res) => //THIS IS TEMPORARY, SHOULD BE REPLACED. maybe not.

@@ -144,5 +144,6 @@ function pause(query)
 module.exports = 
 {
     downloadQuery, 
-    download
+    download,
+    pause
 }
