@@ -8,6 +8,9 @@ const query = require("./query");
 const path = require("path");
 const ws = require("ws");
 const Debug = require("./logger");
+const config = require("./config");
+
+config.loadConfig();
 
 app.use(require("body-parser").json())
 app.use(require("express").static("frontend"));
@@ -23,7 +26,7 @@ let queries = {};
  */
 let variousFiles = new query.query("Various Files", new Date());
 queries[variousFiles.getCleanName()] = variousFiles;
-const downloadFolder = path.join(require("os").homedir(), "Downloads");
+const downloadFolder = config.getConfig().downloadPath;
 
 app.get("/", (req, res) => 
 {
@@ -123,7 +126,7 @@ app.post("/start", (req, res) =>
 
 app.post("/pause", (req, res) => 
 {
-    let q = req.query.query;
+    let q = queries[req.query.query];
     Debug.info("Pausing: ", q);
     downloader.pause(q);
     res.statusCode = 200;

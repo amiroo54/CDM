@@ -131,6 +131,7 @@ function downloadQuery(query, numOfDownloads, updateCallBack)
  */
 function pause(query)
 {
+    
     for (let i = 0; i < query.active.length; i++ )
     {
         query.active[i].end();
