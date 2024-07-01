@@ -10,13 +10,14 @@ The backend is done with rust and the gui with vuejs.
 <h5>Arch</h5>
 <code>sudo pacman -S yarn rustup</code>
 
-Tf it is the first time you want to run this:
+
+- If it is the first time you want to run this:
 <code>yarn</code>
 
-and for every subsequent time:
+- and for every subsequent time:
 <code>yarn tauri dev</code>
 
-and for building the app:
+- and for building the app:
 <code>yarn tauri build</code>
 
 Report any bug, problem or request new features in the github page:
