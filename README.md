@@ -1,7 +1,37 @@
-# Tauri + Vue 3
+<h1>CDM - Centrilized Download Manager</h1>
+this app aims to let users use their computer as a download server for their home/workspace.
 
-This template should help get you started developing with Tauri + Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+the backend is done with rust and the gui with vuejs.
 
-## Recommended IDE Setup
+<h2>How to use?</h2>
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
+<h3>Dependencies</h3>
+<h4>Linux</h4>
+<h5>Arch</h5>
+<code>sudo pacman -S yarn rustup</code>
+
+<h5>Arch</h5>
+<code></code>
+
+<h5>Arch</h5>
+<code></code>
+
+<h5>Arch</h5>
+<code></code>
+
+
+if it is the first time you want to run this
+<code>yarn</code>
+
+and for every subsequent time
+<code>yarn tauri dev</code>
+
+and for building the app 
+<code>yarn tauri build</code>
+
+Report any bug, problem or request new features in the github page:
+https://github.com/amiroo54/CDM/issues
+
+Contact us via Telegram:
+amiroo.f: https://t.me/amiroo_f/
+MrJavadGG: https://t.me/MrJavadGG/

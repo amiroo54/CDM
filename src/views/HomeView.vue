@@ -71,9 +71,9 @@ button:active{
 
 <script>
 // @ is an alias to /src
-import SingleDownload from '@/components/SingleDownload.vue';
-import MassDownload from '@/components/MassDownload.vue';
-import QueryControl from '@/components/Query/QueryControl.vue';
+import SingleDownload from '/src/components/SingleDownload.vue';
+import MassDownload from '/src/components/MassDownload.vue';
+import QueryControl from '/src/components/Query/QueryControl.vue';
 export default {
   name: 'HomeView',
   components: {
