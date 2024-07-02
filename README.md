@@ -1,30 +1,39 @@
 # CDM - Centrilized Download Manager
 This app aims to let users use their computer as a download server for their home/workspace.
 
-The backend is done with rust and the gui with vuejs.
+> [!NOTE]
+> The backend is done with rust and the gui with vuejs.
 
 ## Dependencies: You need to have "rustup" and "yarn" installed:
 ### Linux
    - Arch:
-     
-          sudo pacman -Sy rustup yarn --noconfirm
-          rustup default stable
+     ```bash
+     sudo pacman -Sy rustup yarn --noconfirm
+     rustup default stable
+     ```
    - Ubuntu:
-     * First of all, you need to install curl if (you don`t have yet):
-     
-             sudo apt install curl gnupg -y
+     * First of all, you need have curl installed:
+          ```bash
+          sudo apt install curl gnupg -y
+          ```
      * To install rustup:
-       
-              curl https://sh.rustup.rs -sSf | sh
-      * Restart your shell. Then:
-            
-              source "$HOME/.cargo/env"
-      * To install yarn:
-    
-              curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-              echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-              sudo apt update && sudo apt install yarn -y
-       
+          ```bash
+          curl https://sh.rustup.rs -sSf | sh
+          #DO NOT FORGET TO RESTART YOUR SHELL!!!
+
+          source "$HOME/.cargo/env"
+          ```
+     * To install yarn:
+          ```bash
+          sudo apt install npm
+          sudo npm install -g corepack
+          corepack enable
+          corepack prepare yarn@stable —activate
+          ```
+
+> [!TIP]
+> You can verify the installation of yarn by `yarn -version` and rustup by `rustc -V`.
+
 # How to use?
 | Situation | Command |
 | --- | :---: |
