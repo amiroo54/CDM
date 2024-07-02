@@ -18,6 +18,7 @@ You need to have "rustup" and "yarn" installed.
           3. source "$HOME/.cargo/env"
      * To install yarn:
           1. ```curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -```
+          
           ```echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list```
           2. sudo apt update && sudo apt install yarn -y
 # How to use?
