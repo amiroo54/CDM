@@ -1,37 +1,51 @@
-<h1>CDM - Centrilized Download Manager</h1>
-this app aims to let users use their computer as a download server for their home/workspace.
+# CDM - Centrilized Download Manager
+This app aims to let users use their computer as a download server for their home/workspace.
 
-the backend is done with rust and the gui with vuejs.
+> [!NOTE]
+> The backend is done with rust and the gui with vuejs.
 
-<h2>How to use?</h2>
+## Dependencies: You need to have "rustup" and "yarn" installed:
+### Linux
+   - Arch:
+     ```bash
+     sudo pacman -Sy rustup yarn --noconfirm
+     rustup default stable
+     ```
+   - Ubuntu:
+     * First of all, you need have curl installed:
+          ```bash
+          sudo apt install curl gnupg -y
+          ```
+     * To install rustup:
+          ```bash
+          curl https://sh.rustup.rs -sSf | sh
+          #DO NOT FORGET TO RESTART YOUR SHELL!!!
 
-<h3>Dependencies</h3>
-<h4>Linux</h4>
-<h5>Arch</h5>
-<code>sudo pacman -S yarn rustup</code>
+          source "$HOME/.cargo/env"
+          ```
+     * To install yarn:
+          ```bash
+          sudo apt install npm
+          sudo npm install -g corepack
+          corepack enable
+          corepack prepare yarn@stable —activate
+          ```
 
-<h5>Arch</h5>
-<code></code>
+> [!TIP]
+> You can verify the installation of yarn by `yarn -version` and rustup by `rustc -V`.
 
-<h5>Arch</h5>
-<code></code>
+# How to use?
+| Situation | Command |
+| --- | :---: |
+| The first time you want to run the app: | ```yarn``` |
+| Every subsequent time: | ```yarn tauri dev``` |
+| Building the app: | ```yarn tauri build``` |
 
-<h5>Arch</h5>
-<code></code>
+## Contact us
+Core founder: [amiroo.f](https://t.me/amiroo_f/)
 
+Helper: [MrJavadGG](https://t.me/MrJavadGG/)
 
-if it is the first time you want to run this
-<code>yarn</code>
-
-and for every subsequent time
-<code>yarn tauri dev</code>
-
-and for building the app 
-<code>yarn tauri build</code>
 
 Report any bug, problem or request new features in the github page:
 https://github.com/amiroo54/CDM/issues
-
-Contact us via Telegram:
-amiroo.f: https://t.me/amiroo_f/
-MrJavadGG: https://t.me/MrJavadGG/
